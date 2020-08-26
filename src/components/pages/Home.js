@@ -7,29 +7,21 @@ const Home = () => {
 
   useEffect(() => {
     loadUsers();
-  }, []);
+  });
 
   const loadUsers = async () => {
-    const result = await axios.get("http://localhost:3003/users");
-    setUser(result.data.reverse());
-  };
-
-  const deleteUser = async id => {
-    await axios.delete(`http://localhost:3003/users/${id}`);
-    loadUsers();
+    const result = await axios.get("https://admin.digishaala.com/organizations");
+    setUser(result.data);
   };
 
   return (
     <div className="container">
       <div className="py-4">
-        <h1>Home Page</h1>
+        <h1 className="text-center mb-4">User List</h1>
         <table class="table border shadow">
-          <thead class="thead-dark">
+          <thead class="thead-light">
             <tr>
-              <th scope="col">#</th>
               <th scope="col">Name</th>
-              <th scope="col">User Name</th>
-              <th scope="col">Email</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -38,23 +30,12 @@ const Home = () => {
               <tr>
                 <th scope="row">{index + 1}</th>
                 <td>{user.name}</td>
-                <td>{user.username}</td>
-                <td>{user.email}</td>
                 <td>
-                  <Link class="btn btn-primary mr-2" to={`/users/${user.id}`}>
-                    View
-                  </Link>
                   <Link
-                    class="btn btn-outline-primary mr-2"
+                    class="btn btn-primary"
                     to={`/users/edit/${user.id}`}
                   >
                     Edit
-                  </Link>
-                  <Link
-                    class="btn btn-danger"
-                    onClick={() => deleteUser(user.id)}
-                  >
-                    Delete
                   </Link>
                 </td>
               </tr>
